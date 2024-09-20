@@ -1,6 +1,6 @@
 export function layout(title, content) 
 {
-    return`
+    return` 
         <html>
         <head>
         <title>${title}</title>

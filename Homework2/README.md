@@ -5,7 +5,7 @@
 ## 關於作業
 
 * 此作業包括**app.js**及**render.js**兩個檔案
-* 作業使用html、CSS以及Javascript完成
+* 作業使用html、CSS以及Javascript獨立完成
 * 運用老師在app.js中設置時間的地方，後面加上取得創建時間的程式，並在render.js檔案中在貼文標題後新增時間
 
 ## 參考資料及教材
