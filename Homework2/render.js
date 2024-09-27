@@ -110,6 +110,7 @@ export function layout(title, content)
   {
     return layout(post.title, `
       <h1>${post.title}</h1>
+      <h3 style="color:gray; font-size:18px;">${post.time}<h3>
       <pre>${post.body}</pre>
 
     `)
