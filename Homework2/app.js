@@ -1,9 +1,11 @@
 import { Application, Router } from "https://deno.land/x/oak/mod.ts";
 import * as render from './render.js'
 
+const open = new Date().toLocaleString();
+
 const posts = [
-  {id:0, title:'aaa', body:'aaaaa'},
-  {id:1, title:'bbb', body:'bbbbb'}
+  {id:0, title:'TEST POST', body:'This post is for testing.', time: open},
+  {id:1, title:'測試貼文', body:'此貼文用來測試', time: open}
 ];
 
 const router = new Router();
