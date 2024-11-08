@@ -72,7 +72,8 @@ async function register(ctx)
   ctx.response.body = await render.user_register(); 
 }
 
-async function register_user(ctx) {
+async function register_user(ctx) 
+{
   const body = ctx.request.body;
 
   if (body.type() === "form")
@@ -90,7 +91,9 @@ async function register_user(ctx) {
     db.query("INSERT INTO users (user) VALUES (?)", [user.register_user]);
 
     ctx.response.redirect(`/${user.register_user}/`);
-  } else {
+  } 
+  else 
+  {
     ctx.response.status = 400;
     ctx.response.body = "Expected form data.";
   }
