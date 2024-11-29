@@ -19,17 +19,23 @@ a.out
 bak
 node_modules
 # db
+*.db
+
 # mac
 .DS_Store
+
 # pyenv
 env
+
 # ipynb
 .ipynb_checkpoints
+
 # deepLearning model
 *.ckpt
 *.pt
 model
 models
+
 # deepLearning data
 data
 .data
@@ -37,6 +43,7 @@ processed
 raw
 node_modules
 __pycache__
+
 # Book build output
 _book
 
@@ -50,6 +57,7 @@ _book
 *.tar
 *.gz
 *.mp3
+
 # video
 *.mp4
 *.avi
