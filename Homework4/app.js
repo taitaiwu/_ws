@@ -3,13 +3,11 @@ import * as render from './render.js'
 import { DB } from "https://deno.land/x/sqlite/mod.ts";
 
 const db = new DB("blog.db");
-const open = new Date().toLocaleString();
 let login_or_not = false;
 let login_user = "";
 
 db.query("CREATE TABLE IF NOT EXISTS posts (id INTEGER PRIMARY KEY AUTOINCREMENT, user TEXT, title TEXT, body TEXT, time DATETIME DEFAULT CURRENT_TIMESTAMP)");
 db.query("CREATE TABLE IF NOT EXISTS users (id INTEGER PRIMARY KEY AUTOINCREMENT, user TEXT, password TEXT)");
-//db.query("INSERT INTO posts (user, title, body, time) VALUES (?, ?, ?, ?)", ["Jerry" , "Tom", "Tom is a cat." , open])
 const router = new Router();
 
 router

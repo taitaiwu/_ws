@@ -59,15 +59,8 @@ export function layout(title, content, body)
   export function list(posts, login_or_not, login_user)
   {
     let listHtml = [];
-    let listId = [...new Set (posts.map(record => record.id))];
-    let listUser = [...new Set (posts.map(record => record.user))];
-    let listTitle = [...new Set (posts.map(record => record.title))];
-    let listBody = [...new Set (posts.map(record => record.body))];
-    let listTime = [...new Set (posts.map(record => record.time))];
 
-    console.log("listuser:" , listUser)
-
-    for (let i=0 ; i<listUser.length ; i++)  
+    for (let post of posts)  
     {
         listHtml.push(`
           <br>
@@ -79,10 +72,10 @@ export function layout(title, content, body)
                     <div class="container">  
                       <div class="row align-items-center">
                         <div class="col">
-                          <p class="lead"  style="font-size: 30px;">#${listId[i]} &nbsp;<a href="/${listUser[i]}/post/${listId[i]}"><b>${listTitle[i]}</b></a></p>
+                          <p class="lead"  style="font-size: 30px;">#${post.id} &nbsp;<a href="/${post.user}/post/${post.id}"><b>${post.title}</b></a></p>
                         </div>
                         <div class="col">
-                          <p style="color: gray; font-size: 20px;">作者 : ${listUser[i]}&nbsp;&nbsp;&nbsp;&nbsp;創建時間 : ${listTime[i]}</a>
+                          <p style="color: gray; font-size: 20px;">作者 : ${post.user}&nbsp;&nbsp;&nbsp;&nbsp;創建時間 : ${post.time}</a>
                         </div>
                       </div>
                     </div>
@@ -90,7 +83,7 @@ export function layout(title, content, body)
                 </h2>
                 <div id="collapseOne" class="accordion-collapse collapse show" aria-labelledby="headingOne" data-bs-parent="#accordionExample">
                   <div class="accordion-body" style="font-size: 20px;">
-                    ${listBody[i]}
+                    ${post.body}
                   </div>
                 </div>
               </div>

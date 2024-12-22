@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html lang="zh-cn">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Register</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-F3w7mX95PdgyTmZZMECAngseQB83DfGTowi0iMjiWaeVhAn4FJkqJByhZMI3AhiU" crossorigin="anonymous">
+    <style>
+        @import url(https://fonts.googleapis.com/earlyaccess/cwtexfangsong.css);
+        @import url(https://fonts.googleapis.com/css?family=Noto+Sans+TC&display=swap);
+        @import url(https://fonts.googleapis.com/css?family=Noto+Serif+TC&amp;display=swap);
+
+        body 
+        {
+            font-family: 'Noto Serif TC', sans-serif;
+            background-color: #f0f8ff;
+            margin: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+        }
+        .container 
+        {
+            background-color: #ffffff;
+            padding: 20px 30px;
+            border-radius: 8px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            width: 100%;
+            max-width: 400px;
+        }
+        h1 
+        {
+            text-align: center;
+            color: #333;
+        }
+        form 
+        {
+            display: flex;
+            flex-direction: column;
+        }
+        input:focus 
+        {
+            border-color: #007BFF;
+            outline: none;
+        }
+        button 
+        {
+            background-color: #007BFF;
+            color: white;
+            padding: 10px;
+            border: none;
+            border-radius: 5px;
+            font-size: 1em;
+            cursor: pointer;
+            transition: background-color 0.3s;
+        }
+        button:hover 
+        {
+            background-color: #0056b3;
+        }
+        .message 
+        {
+            text-align: center;
+            margin-top: 10px;
+            font-size: 0.9em;
+        }
+        .message a 
+        {
+            color: #007BFF;
+            text-decoration: none;
+        }
+        .message a:hover 
+        {
+            text-decoration: underline;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>註冊 Signup</h1>
+        <br>
+        <form action="/signup" method="POST">
+            <div class="form-floating mb-3">
+                <input type="text" name="name" class="form-control" id="floatingInput" placeholder="name@example.com" required>
+                <label for="floatingInput">姓名 Name</label>
+            </div>
+
+            <div class="form-floating mb-3">
+                <input type="text" name="std_id" class="form-control" id="floatingInput" placeholder="name@example.com" required>
+                <label for="floatingInput">學號 Student ID</label>
+            </div>
+
+            <div class="form-floating mb-3">
+                <input type="text" name="email" class="form-control" id="floatingInput" placeholder="name@example.com" required>
+                <label for="floatingInput">電子信箱 Email address</label>
+            </div>
+
+            <div class="form-floating mb-3">
+                <input type="password" name="password" class="form-control" id="floatingPassword" placeholder="Password" required>
+                <label for="floatingPassword">密碼 Password</label>
+            </div>
+
+            <div class="form-floating mb-3">
+                <input type="password" name="confirm_password" class="form-control" id="confirm_password" placeholder="Password" required>
+                <label for="floatingPassword">確認密碼 Confirm Password</label>
+            </div>
+
+            <button type="submit">Sign Up</button>
+        </form>
+        <div class="message">
+            已經有帳號? <strong><a href="/login">登入</a></strong>
+        </div>
+    </div>
+    {% if text is not none %}
+        <script>
+            window.alert("{{ text }}");
+        </script>
+    {% endif %}
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.1/dist/js/bootstrap.bundle.min.js" integrity="sha384-/bQdsTh/da6pkI1MST/rWKFNjaCP5gBSY4sEBT38Q/9RBh9AH40zEOg7Hlq2THRZ" crossorigin="anonymous"></script>
+</body>
+</html>

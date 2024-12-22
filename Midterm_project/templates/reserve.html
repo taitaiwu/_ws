@@ -1,0 +1,156 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>預約表單</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/css/bootstrap.min.css" rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Arial', sans-serif;
+            background-color: #f4f4f9;
+            margin: 0;
+            padding: 0;
+        }
+        .container {
+            width: 80%;
+            max-width: 800px;
+            margin: 50px auto;
+            background-color: white;
+            padding: 30px;
+            border-radius: 10px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        }
+        h2 {
+            text-align: center;
+            color: #333;
+            margin-bottom: 20px;
+        }
+        .form-group {
+            margin-bottom: 20px;
+        }
+        label {
+            font-size: 16px;
+            color: #333;
+            margin-bottom: 8px;
+            display: block;
+        }
+        input, select, textarea {
+            width: 100%;
+            padding: 12px;
+            font-size: 16px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            margin-top: 5px;
+            box-sizing: border-box;
+        }
+        input[readonly] {
+            background-color: #f9f9f9;
+        }
+        textarea {
+            resize: vertical;
+            height: 100px;
+        }
+        button {
+            width: 100%;
+            padding: 12px;
+            font-size: 18px;
+            background-color: #4CAF50;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: background-color 0.3s;
+        }
+        button:hover {
+            background-color: #45a049;
+        }
+        .form-group .note {
+            font-size: 14px;
+            color: #777;
+            margin-top: 5px;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="container">
+        <h2>教室借用預約表單</h2>
+        {% block content %}
+        <form action="/{{user.student_id}}/reserve/{{classroom.room}}" method="POST">
+            <div class="form-floating mb-3">
+                <input type="text" name="classroom_num" class="form-control" id="floatingInput" value="{{classroom.room}}" readonly>
+                <label for="floatingInput">教室代號 Classroom No.</label>
+            </div>
+            
+            <div class="form-floating mb-3">
+                <input type="text" name="classroom_name" class="form-control" id="floatingInput" value="{{classroom.name}}" readonly>
+                <label for="floatingInput">教室名稱 Classroom Name</label>
+            </div>
+            
+            <div class="form-floating mb-3">
+                <input type="text" name="student_ID" class="form-control" id="floatingInput" value="{{user.student_id}}" readonly>
+                <label for="floatingInput">學生學號 Student ID</label>
+            </div>
+            
+            <div class="form-floating mb-3">
+                <input type="text" name="student_Name" class="form-control" id="floatingInput" value="{{user.user}}" readonly>
+                <label for="floatingInput">學生姓名 Student Name</label>
+            </div>
+
+            <div class="form-floating mb-3">
+                <select class="form-select" id="borrowDate" name="borrowDate" aria-label="借用日期 borrow date"></select>
+                <label for="floatingSelect">借用日期 borrow Date</label>
+            </div>
+
+            <div class="form-floating mb-3">
+                <select class="form-select" id="borrowTime" name="borrowTime" aria-label="借用時間 borrow Time"></select>
+                <label for="floatingSelect">借用時間 borrow Time</label>
+            </div>
+
+            <div class="form-floating mb-3">
+                <textarea class="form-control" placeholder="請填寫借用原因" id="floatingTextarea2" name="borrowReason" style="height: 100px" required></textarea>
+                <label for="floatingTextarea2">借用原因 Borrow Reason</label>
+            </div>
+
+            <button type="submit">提交</button>
+        </form>
+        {% endblock %}
+    </div>
+
+    <script>
+        // 生成日期選項（從明天開始到一週後）
+        function generateDates() {
+            const today = new Date();
+            const options = document.getElementById("borrowDate");
+            for (let i = 1; i <= 7; i++) {
+                let date = new Date(today);
+                date.setDate(today.getDate() + i);
+                const option = document.createElement("option");
+                option.value = date.toISOString().split("T")[0];
+                option.textContent = date.toLocaleDateString('zh-TW');
+                options.appendChild(option);
+            }
+        }
+
+        // 生成時間選項（從08:00到21:00，每小時一個選項）
+        function generateTimes() {
+            const options = document.getElementById("borrowTime");
+            for (let hour = 8; hour <= 21; hour++) {
+                const option = document.createElement("option");
+                const time = (hour < 10 ? "0" : "") + hour + ":00";
+                option.value = time;
+                option.textContent = time;
+                options.appendChild(option);
+            }
+        }
+
+        // 頁面加載時生成日期和時間選項
+        window.onload = function() {
+            generateDates();
+            generateTimes();
+        };
+    </script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>
