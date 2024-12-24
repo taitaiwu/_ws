@@ -17,9 +17,8 @@
 
 ---
 
-## 關於期末作業 - [作業連結](https://taitaiwu.github.io/wp)
-
-全部作業都有完成
+## 關於期末作業 
+全部作業都有完成，使用Javascript和Deno完成
 **作業詳情**
 1. [作業1](https://github.com/taitaiwu/_ws/tree/master/Homework1) : 修改老師程式碼
 2. [作業2](https://github.com/taitaiwu/_ws/tree/master/Homework2) : 修改老師程式碼
