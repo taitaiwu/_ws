@@ -32,7 +32,7 @@
                         <!-- 通過按鈕 -->
                         <form action="/{{ std_id }}/admin" method="POST" style="display: inline-block;">
                             <input type="hidden" name="reserve_id" value="{{ reserve.id }}">
-                            <input type="hidden" name="status" value="approved">
+                            <input type="hidden" name="outcome" value="approved">
                             <button type="submit" class="btn btn-success btn-sm">通過</button>
                         </form>
 
@@ -50,9 +50,9 @@
                                         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                                     </div>
                                     <div class="modal-body">
-                                        <form action="/{{ std_id }}/admin"" method="POST" id="rejectForm{{ reserve.id }}">
+                                        <form action="/{{ std_id }}/admin" method="POST" id="rejectForm{{ reserve.id }}">
                                             <input type="hidden" name="reserve_id" value="{{ reserve.id }}">
-                                            <input type="hidden" name="status" value="rejected">
+                                            <input type="hidden" name="outcome" value="rejected">
                                             <div class="mb-3">
                                                 <textarea class="form-control" id="rejectReason{{ reserve.id }}" name="reject_reason" placeholder="請填寫拒絕原因" rows="4" required></textarea>
                                             </div>

@@ -149,16 +149,17 @@ async def admin_ui(request: Request, std_id: int, db: Session = Depends(get_db))
 
 @app.post("/{std_id}/admin")
 async def admin(std_id: int, reserve_id: int=Form(...), outcome: str = Form(...), reject_reason: str = Form(None), db: Session = Depends(get_db)):
-    reservation = db.query(Classroom_Reserve).filter(Classroom_Reserve.id == reserve_id)
+    reservation = db.query(Classroom_Reserve).filter(Classroom_Reserve.id == reserve_id).first()
 
     if outcome == "approved":
         reservation.check = True
+        reservation.false_reason = None
     elif outcome == "rejected":
         reservation.check = False
         reservation.false_reason = reject_reason
 
     db.commit()
-    return RedirectResponse(url="/999999999/admin", status_code=status.HTTP_303_SEE_OTHER)
+    return RedirectResponse(url=f"/{std_id}/admin", status_code=status.HTTP_302_FOUND)
 
 @app.get("/{std_id}/classroom", response_class=HTMLResponse)
 async def classroom_ui(request: Request,std_id: int, db: Session = Depends(get_db)):
