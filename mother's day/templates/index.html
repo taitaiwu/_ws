@@ -1,0 +1,749 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>母親節特別網站</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Ma+Shan+Zheng&family=Noto+Serif+TC:wght@400;500;600;700&display=swap');
+        
+        :root {
+            --primary-color: #d23669;
+            --secondary-color: #9e4244;
+            --accent-color: #ff8da1;
+            --light-pink: #ffccd5;
+            --lighter-pink: #fff5f7;
+            --white: #ffffff;
+            --box-shadow: 0 8px 20px rgba(210, 54, 105, 0.15);
+            --text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.1);
+        }
+
+        body {
+            font-family: 'Noto Serif TC', serif;
+            margin: 0;
+            padding: 0;
+            background-color: var(--lighter-pink);
+            color: var(--secondary-color);
+            line-height: 1.8;
+            overflow-x: hidden;
+        }
+
+        /* 加載動畫 */
+        #loading-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(135deg, var(--lighter-pink), var(--light-pink));
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            z-index: 10000;
+            transition: opacity 0.5s ease-out;
+        }
+
+        .sk-cube-grid {
+            width: 80px;
+            height: 80px;
+            margin: 0 auto;
+        }
+
+        .sk-cube-grid .sk-cube {
+            width: 33%;
+            height: 33%;
+            background-color: var(--accent-color);
+            float: left;
+            border-radius: 20%;
+            -webkit-animation: sk-cubeGridScaleDelay 1.3s infinite ease-in-out;
+            animation: sk-cubeGridScaleDelay 1.3s infinite ease-in-out; 
+        }
+
+        .sk-cube-grid .sk-cube1 {
+            -webkit-animation-delay: 0.2s;
+            animation-delay: 0.2s; 
+        }
+
+        .sk-cube-grid .sk-cube2 {
+            -webkit-animation-delay: 0.3s;
+            animation-delay: 0.3s; 
+        }
+
+        .sk-cube-grid .sk-cube3 {
+            -webkit-animation-delay: 0.4s;
+            animation-delay: 0.4s; 
+        }
+
+        .sk-cube-grid .sk-cube4 {
+            -webkit-animation-delay: 0.1s;
+            animation-delay: 0.1s; 
+        }
+
+        .sk-cube-grid .sk-cube5 {
+            -webkit-animation-delay: 0.2s;
+            animation-delay: 0.2s; 
+        }
+        .sk-cube-grid .sk-cube6 {
+            -webkit-animation-delay: 0.3s;
+            animation-delay: 0.3s; 
+        }
+
+        .sk-cube-grid .sk-cube7 {
+            -webkit-animation-delay: 0s;
+            animation-delay: 0s; 
+        }
+
+        .sk-cube-grid .sk-cube8 {
+            -webkit-animation-delay: 0.1s;
+            animation-delay: 0.1s; 
+        }
+
+        .sk-cube-grid .sk-cube9 {
+            -webkit-animation-delay: 0.2s;
+            animation-delay: 0.2s; 
+        }
+
+        @-webkit-keyframes sk-cubeGridScaleDelay {
+            0%, 70%, 100% {
+                -webkit-transform: scale3D(1, 1, 1);
+                transform: scale3D(1, 1, 1);
+            } 
+            35% {
+                -webkit-transform: scale3D(0, 0, 1);
+                transform: scale3D(0, 0, 1); 
+            }
+        }
+
+        @keyframes sk-cubeGridScaleDelay {
+            0%, 70%, 100% {
+                -webkit-transform: scale3D(1, 1, 1);
+                transform: scale3D(1, 1, 1);
+            } 
+            35% {
+                -webkit-transform: scale3D(0, 0, 1);
+                transform: scale3D(0, 0, 1);
+            } 
+        }
+        
+        /* 花瓣效果相關樣式 */
+        .petal-container {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: 9999;
+            overflow: hidden;
+        }
+        
+        .petal {
+            position: absolute;
+            background-repeat: no-repeat;
+            background-size: 100% 100%;
+            opacity: 0.8;
+            transform-origin: center;
+            z-index: 1000;
+            filter: drop-shadow(0 2px 2px rgba(0, 0, 0, 0.1));
+            transition: all 0.3s ease;
+        }
+        
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+        
+        header {
+            background: linear-gradient(135deg, #ffccd5, #ffb6c1);
+            padding: 40px 0;
+            text-align: center;
+            border-bottom: 5px solid var(--accent-color);
+            box-shadow: var(--box-shadow);
+            position: relative;
+            overflow: hidden;
+        }
+
+        header::before {
+            content: "";
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: url("data:image/svg+xml,%3Csvg width='100' height='100' viewBox='0 0 100 100' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M11 18c3.866 0 7-3.134 7-7s-3.134-7-7-7-7 3.134-7 7 3.134 7 7 7zm48 25c3.866 0 7-3.134 7-7s-3.134-7-7-7-7 3.134-7 7 3.134 7 7 7zm-43-7c1.657 0 3-1.343 3-3s-1.343-3-3-3-3 1.343-3 3 1.343 3 3 3zm63 31c1.657 0 3-1.343 3-3s-1.343-3-3-3-3 1.343-3 3 1.343 3 3 3zM34 90c1.657 0 3-1.343 3-3s-1.343-3-3-3-3 1.343-3 3 1.343 3 3 3zm56-76c1.657 0 3-1.343 3-3s-1.343-3-3-3-3 1.343-3 3 1.343 3 3 3zM12 86c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm28-65c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm23-11c2.76 0 5-2.24 5-5s-2.24-5-5-5-5 2.24-5 5 2.24 5 5 5zm-6 60c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm29 22c2.76 0 5-2.24 5-5s-2.24-5-5-5-5 2.24-5 5 2.24 5 5 5zM32 63c2.76 0 5-2.24 5-5s-2.24-5-5-5-5 2.24-5 5 2.24 5 5 5zm57-13c2.76 0 5-2.24 5-5s-2.24-5-5-5-5 2.24-5 5 2.24 5 5 5zm-9-21c1.105 0 2-.895 2-2s-.895-2-2-2-2 .895-2 2 .895 2 2 2zM60 91c1.105 0 2-.895 2-2s-.895-2-2-2-2 .895-2 2 .895 2 2 2zM35 41c1.105 0 2-.895 2-2s-.895-2-2-2-2 .895-2 2 .895 2 2 2zM12 60c1.105 0 2-.895 2-2s-.895-2-2-2-2 .895-2 2 .895 2 2 2z' fill='%23ffffff' fill-opacity='0.1' fill-rule='evenodd'/%3E%3C/svg%3E");
+            opacity: 0.6;
+        }
+        
+        h1 {
+            font-family: 'Ma Shan Zheng', cursive;
+            font-size: 4rem;
+            margin: 0;
+            color: var(--primary-color);
+            text-shadow: var(--text-shadow);
+            position: relative;
+            z-index: 1;
+            animation: fadeIn 1.5s ease-in-out;
+        }
+        
+        .subtitle {
+            font-size: 1.5rem;
+            margin-top: 10px;
+            color: var(--secondary-color);
+            font-weight: 600;
+        }
+        
+        /* 倒數計時區塊 */
+        .countdown {
+            text-align: center;
+            padding: 30px;
+            background-color: var(--white);
+            border-radius: 15px;
+            margin: 30px 0;
+            box-shadow: var(--box-shadow);
+            transform: translateY(0);
+            transition: transform 0.3s ease;
+            position: relative;
+            z-index: 1;
+            overflow: hidden;
+        }
+        
+        .countdown:hover {
+            transform: translateY(-5px);
+        }
+        
+        .countdown::before {
+            content: "";
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 5px;
+            background: linear-gradient(90deg, var(--accent-color), var(--primary-color));
+            z-index: 2;
+        }
+        
+        .countdown h2 {
+            color: var(--primary-color);
+            margin-bottom: 15px;
+            font-weight: 700;
+            position: relative;
+            display: inline-block;
+        }
+        
+        .countdown h2::after {
+            content: "";
+            position: absolute;
+            bottom: -5px;
+            left: 25%;
+            width: 50%;
+            height: 2px;
+            background-color: var(--accent-color);
+        }
+        
+        #timer {
+            font-size: 2.2rem;
+            font-weight: 700;
+            color: var(--secondary-color);
+            margin-top: 20px;
+            text-shadow: 0 1px 1px rgba(0, 0, 0, 0.1);
+            display: flex;
+            justify-content: center;
+            flex-wrap: wrap;
+            gap: 15px;
+        }
+        
+        .time-unit {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            min-width: 80px;
+        }
+        
+        .time-number {
+            background-color: var(--lighter-pink);
+            border-radius: 10px;
+            padding: 10px 15px;
+            font-size: 2.5rem;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            color: var(--primary-color);
+            margin-bottom: 5px;
+            min-width: 80px;
+        }
+        
+        .time-label {
+            font-size: 1rem;
+            color: var(--secondary-color);
+            font-weight: 500;
+        }
+        
+        /* 登入區塊 */
+        .login-container {
+            background-color: var(--white);
+            padding: 40px;
+            border-radius: 15px;
+            margin: 30px 0;
+            box-shadow: var(--box-shadow);
+            text-align: center;
+            position: relative;
+            transition: all 0.3s ease;
+        }
+        
+        .login-container:hover {
+            transform: translateY(-5px);
+        }
+        
+        .login-container::before {
+            content: "";
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 5px;
+            background: linear-gradient(90deg, var(--accent-color), var(--primary-color));
+        }
+        
+        .lead {
+            font-size: 1.5rem;
+            margin-bottom: 30px;
+            color: var(--secondary-color);
+            font-weight: 500;
+        }
+        
+        .form-floating {
+            margin-bottom: 25px;
+        }
+        
+        .form-control:focus {
+            border-color: var(--accent-color);
+            box-shadow: 0 0 0 0.25rem rgba(255, 141, 161, 0.25);
+        }
+        
+        .btn-login {
+            background: linear-gradient(135deg, var(--accent-color), var(--primary-color));
+            border: none;
+            color: white;
+            padding: 12px 40px;
+            font-size: 1.2rem;
+            border-radius: 50px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 10px rgba(210, 54, 105, 0.3);
+        }
+        
+        .btn-login:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 15px rgba(210, 54, 105, 0.4);
+        }
+        
+        .btn-login:active {
+            transform: translateY(1px);
+        }
+        
+        /* 底部區塊 */
+        footer {
+            text-align: center;
+            padding: 40px 0;
+            background: linear-gradient(135deg, #ffccd5, #ffb6c1);
+            margin-top: 50px;
+            color: var(--secondary-color);
+            position: relative;
+            overflow: hidden;
+        }
+        
+        footer::before {
+            content: "";
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: url("data:image/svg+xml,%3Csvg width='100' height='100' viewBox='0 0 100 100' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M11 18c3.866 0 7-3.134 7-7s-3.134-7-7-7-7 3.134-7 7 3.134 7 7 7zm48 25c3.866 0 7-3.134 7-7s-3.134-7-7-7-7 3.134-7 7 3.134 7 7 7zm-43-7c1.657 0 3-1.343 3-3s-1.343-3-3-3-3 1.343-3 3 1.343 3 3 3zm63 31c1.657 0 3-1.343 3-3s-1.343-3-3-3-3 1.343-3 3 1.343 3 3 3zM34 90c1.657 0 3-1.343 3-3s-1.343-3-3-3-3 1.343-3 3 1.343 3 3 3zm56-76c1.657 0 3-1.343 3-3s-1.343-3-3-3-3 1.343-3 3 1.343 3 3 3zM12 86c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm28-65c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm23-11c2.76 0 5-2.24 5-5s-2.24-5-5-5-5 2.24-5 5 2.24 5 5 5zm-6 60c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm29 22c2.76 0 5-2.24 5-5s-2.24-5-5-5-5 2.24-5 5 2.24 5 5 5zM32 63c2.76 0 5-2.24 5-5s-2.24-5-5-5-5 2.24-5 5 2.24 5 5 5zm57-13c2.76 0 5-2.24 5-5s-2.24-5-5-5-5 2.24-5 5 2.24 5 5 5zm-9-21c1.105 0 2-.895 2-2s-.895-2-2-2-2 .895-2 2 .895 2 2 2zM60 91c1.105 0 2-.895 2-2s-.895-2-2-2-2 .895-2 2 .895 2 2 2zM35 41c1.105 0 2-.895 2-2s-.895-2-2-2-2 .895-2 2 .895 2 2 2zM12 60c1.105 0 2-.895 2-2s-.895-2-2-2-2 .895-2 2 .895 2 2 2z' fill='%23ffffff' fill-opacity='0.1' fill-rule='evenodd'/%3E%3C/svg%3E");
+            opacity: 0.6;
+        }
+        
+        .heart {
+            color: var(--primary-color);
+            font-size: 1.5em;
+            animation: heartbeat 1.5s infinite;
+            display: inline-block;
+            margin: 0 5px;
+        }
+        
+        @keyframes heartbeat {
+            0% { transform: scale(1); }
+            25% { transform: scale(1.1); }
+            50% { transform: scale(1); }
+            75% { transform: scale(1.1); }
+            100% { transform: scale(1); }
+        }
+        
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(-20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        
+        /* 響應式設計 */
+        @media (max-width: 768px) {
+            h1 {
+                font-size: 3rem;
+            }
+            
+            .subtitle {
+                font-size: 1.2rem;
+            }
+            
+            .time-unit {
+                min-width: 60px;
+            }
+            
+            .time-number {
+                font-size: 2rem;
+                min-width: 60px;
+            }
+            
+            .lead {
+                font-size: 1.3rem;
+            }
+            
+            .login-container, .countdown {
+                padding: 25px;
+            }
+        }
+        
+        @media (max-width: 480px) {
+            h1 {
+                font-size: 2.5rem;
+            }
+            
+            .time-unit {
+                min-width: 50px;
+            }
+            
+            .time-number {
+                font-size: 1.8rem;
+                min-width: 50px;
+                padding: 8px 12px;
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <!-- 加載動畫覆蓋層 -->
+    <div id="loading-overlay" style="opacity: 0; display: none;">
+        <div class="sk-cube-grid">
+            <div class="sk-cube sk-cube1"></div>
+            <div class="sk-cube sk-cube2"></div>
+            <div class="sk-cube sk-cube3"></div>
+            <div class="sk-cube sk-cube4"></div>
+            <div class="sk-cube sk-cube5"></div>
+            <div class="sk-cube sk-cube6"></div>
+            <div class="sk-cube sk-cube7"></div>
+            <div class="sk-cube sk-cube8"></div>
+            <div class="sk-cube sk-cube9"></div>
+        </div>
+    </div>
+
+    <header>
+        <div class="container">
+            <h1 class="animate__animated animate__fadeInDown">母親節快樂</h1>
+            <p class="subtitle animate__animated animate__fadeIn animate__delay-1s">將愛與感謝獻給世上最偉大的女人</p>
+        </div>
+    </header>
+    
+    <div class="container">
+        <div class="countdown animate__animated animate__fadeInUp">
+            <h2><i class="fas fa-calendar-heart"></i> 2025年母親節倒數</h2>
+            <div id="timer">
+                <div class="time-unit">
+                    <div class="time-number" id="days">00</div>
+                    <div class="time-label">天</div>
+                </div>
+                <div class="time-unit">
+                    <div class="time-number" id="hours">00</div>
+                    <div class="time-label">時</div>
+                </div>
+                <div class="time-unit">
+                    <div class="time-number" id="minutes">00</div>
+                    <div class="time-label">分</div>
+                </div>
+                <div class="time-unit">
+                    <div class="time-number" id="seconds">00</div>
+                    <div class="time-label">秒</div>
+                </div>
+            </div>
+        </div>
+        
+        <div class="login-container animate__animated animate__fadeInUp animate__delay-1s">
+            <h2><i class="fas fa-lock-heart"></i> 專屬通道</h2>
+            <p class="lead">請輸入你兒子的<strong>生日</strong>(西元年月日)開啟專屬母親節祝福</p>
+            <form action="/submit" method="POST">
+                <div class="form-floating">
+                    <input type="password" name="birthday" class="form-control" id="floatingPassword" placeholder="Password" required>
+                    <label for="floatingPassword"><i class="fas fa-key"></i> 密碼 Password</label>
+                </div>
+                
+                <button type="submit" class="btn-login">
+                    <i class="fas fa-heart"></i> 揭開祝福
+                </button>
+            </form>
+        </div>
+    </div>
+    
+    <footer>
+        <div class="container">
+            <p>母親節特別網站 <span class="heart"><i class="fas fa-heart"></i></span> 獻給所有偉大的媽媽</p>
+            <p>&copy; 2025 感謝媽媽網站</p>
+        </div>
+    </footer>
+    
+    <!-- 添加花瓣容器 -->
+    <div class="petal-container" id="petal-container"></div>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/js/all.min.js"></script>
+    <script>
+        // 頁面載入完成後立即隱藏加載動畫
+        document.addEventListener('DOMContentLoaded', function() {
+            const loadingOverlay = document.getElementById('loading-overlay');
+            if (loadingOverlay) {
+                loadingOverlay.style.opacity = '0';
+                loadingOverlay.style.display = 'none';
+            }
+        });
+
+        // 創建花瓣落下特效
+        function createPetalFallingEffect() {
+            const petalContainer = document.getElementById('petal-container');
+            const windowWidth = window.innerWidth;
+            const windowHeight = window.innerHeight;
+            const petalColors = ['#ffccd5', '#ffb6c1', '#ff8da1', '#ffa8b5', '#ff97a7', '#e77c8e', '#fdeff2'];
+            const petalShapes = ['✿', '❀', '❁', '✾', '💕', '🌸', '🌺', '💮'];
+            
+            // 創建隨機數量的花瓣
+            const petalCount = Math.floor(windowWidth / 8); // 根據視窗寬度決定花瓣數量
+            
+            for (let i = 0; i < petalCount; i++) {
+                setTimeout(() => {
+                    // 創建一個花瓣元素
+                    const petal = document.createElement('div');
+                    petal.className = 'petal';
+                    
+                    // 隨機花瓣屬性
+                    const size = Math.random() * 20 + 15; // 花瓣大小
+                    const color = petalColors[Math.floor(Math.random() * petalColors.length)];
+                    const shape = petalShapes[Math.floor(Math.random() * petalShapes.length)];
+                    const posX = Math.random() * windowWidth; // 初始X位置
+                    const rotateAngle = Math.random() * 360; // 旋轉角度
+                    const duration = Math.random() * 15 + 10; // 花瓣下降持續時間
+                    
+                    // 設置花瓣樣式
+                    petal.style.left = `${posX}px`;
+                    petal.style.top = '-50px';
+                    petal.style.color = color;
+                    petal.style.fontSize = `${size}px`;
+                    petal.style.transform = `rotate(${rotateAngle}deg)`;
+                    petal.innerText = shape;
+                    
+                    // 添加到容器
+                    petalContainer.appendChild(petal);
+                    
+                    // 開始花瓣下落動畫
+                    let startTime = null;
+                    const startPosX = posX;
+                    const amplitude = Math.random() * 70 + 50; // 擺動幅度
+                    const speed = 1 / duration;
+                    
+                    function animatePetal(timestamp) {
+                        if (!startTime) startTime = timestamp;
+                        const progress = (timestamp - startTime) / 1000; // 轉換為秒
+                        
+                        // 計算新的位置
+                        const newY = progress * speed * windowHeight;
+                        const swingX = startPosX + Math.sin(progress) * amplitude;
+                        
+                        petal.style.top = `${newY}px`;
+                        petal.style.left = `${swingX}px`;
+                        petal.style.transform = `rotate(${rotateAngle + progress * 50}deg)`;
+                        
+                        // 繼續動畫或移除花瓣
+                        if (newY < windowHeight + 50) {
+                            requestAnimationFrame(animatePetal);
+                        } else {
+                            petal.remove();
+                            // 創建新的花瓣來替代消失的花瓣
+                            if (document.getElementById('petal-container')) {
+                                createSinglePetal();
+                            }
+                        }
+                    }
+                    
+                    requestAnimationFrame(animatePetal);
+                }, i * 200); // 每200毫秒創建一個新花瓣
+            }
+        }
+        
+        // 創建單個花瓣函數
+        function createSinglePetal() {
+            const petalContainer = document.getElementById('petal-container');
+            if (!petalContainer) return;
+            
+            const windowWidth = window.innerWidth;
+            const windowHeight = window.innerHeight;
+            const petalColors = ['#ffccd5', '#ffb6c1', '#ff8da1', '#ffa8b5', '#ff97a7', '#e77c8e', '#fdeff2'];
+            const petalShapes = ['✿', '❀', '❁', '✾', '💕', '🌸', '🌺', '💮'];
+            
+            // 創建一個花瓣元素
+            const petal = document.createElement('div');
+            petal.className = 'petal';
+            
+            // 隨機花瓣屬性
+            const size = Math.random() * 20 + 15;
+            const color = petalColors[Math.floor(Math.random() * petalColors.length)];
+            const shape = petalShapes[Math.floor(Math.random() * petalShapes.length)];
+            const posX = Math.random() * windowWidth;
+            const rotateAngle = Math.random() * 360;
+            const duration = Math.random() * 15 + 10;
+            
+            // 設置花瓣樣式
+            petal.style.left = `${posX}px`;
+            petal.style.top = '-50px';
+            petal.style.color = color;
+            petal.style.fontSize = `${size}px`;
+            petal.style.transform = `rotate(${rotateAngle}deg)`;
+            petal.innerText = shape;
+            
+            // 添加到容器
+            petalContainer.appendChild(petal);
+            
+            // 開始花瓣下落動畫
+            let startTime = null;
+            const startPosX = posX;
+            const amplitude = Math.random() * 70 + 50;
+            const speed = 1 / duration;
+            
+            function animatePetal(timestamp) {
+                if (!startTime) startTime = timestamp;
+                const progress = (timestamp - startTime) / 1000;
+                
+                const newY = progress * speed * windowHeight;
+                const swingX = startPosX + Math.sin(progress) * amplitude;
+                
+                petal.style.top = `${newY}px`;
+                petal.style.left = `${swingX}px`;
+                petal.style.transform = `rotate(${rotateAngle + progress * 50}deg)`;
+                
+                if (newY < windowHeight + 50) {
+                    requestAnimationFrame(animatePetal);
+                } else {
+                    petal.remove();
+                    // 創建新的花瓣來替代消失的花瓣
+                    if (document.getElementById('petal-container')) {
+                        createSinglePetal();
+                    }
+                }
+            }
+            
+            requestAnimationFrame(animatePetal);
+        }
+        
+        // 設定母親節日期 - 2025年5月11日 (每年5月的第二個星期日)
+        const mothersDayDate = new Date(2025, 4, 11);
+        
+        // 倒數計時器
+        function updateTimer() {
+            const now = new Date();
+            let diff = mothersDayDate - now;
+            
+            // 如果時間已過，顯示"母親節快樂！"
+            if (diff <= 0) {
+                document.getElementById('days').innerHTML = "00";
+                document.getElementById('hours').innerHTML = "00";
+                document.getElementById('minutes').innerHTML = "00";
+                document.getElementById('seconds').innerHTML = "00";
+                document.getElementById('timer').innerHTML = "<div class='time-number' style='width:100%;'>母親節快樂！</div>";
+                return;
+            }
+            
+            const days = Math.floor(diff / (1000 * 60 * 60 * 24));
+            diff -= days * (1000 * 60 * 60 * 24);
+            
+            const hours = Math.floor(diff / (1000 * 60 * 60));
+            diff -= hours * (1000 * 60 * 60);
+            
+            const mins = Math.floor(diff / (1000 * 60));
+            diff -= mins * (1000 * 60);
+            
+            const secs = Math.floor(diff / 1000);
+            
+            document.getElementById('days').innerHTML = days.toString().padStart(2, '0');
+            document.getElementById('hours').innerHTML = hours.toString().padStart(2, '0');
+            document.getElementById('minutes').innerHTML = mins.toString().padStart(2, '0');
+            document.getElementById('seconds').innerHTML = secs.toString().padStart(2, '0');
+        }
+        
+        // 初始化函數 - 確保所有功能正確加載
+        function initializeWebsite() {
+            // 每秒更新一次倒數計時
+            updateTimer();
+            setInterval(updateTimer, 1000);
+            
+            // 啟動花瓣效果
+            createPetalFallingEffect();
+            
+            // 確保加載動畫消失
+            const loadingOverlay = document.getElementById('loading-overlay');
+            loadingOverlay.style.opacity = '0';
+            setTimeout(function() {
+                loadingOverlay.style.display = 'none';
+            }, 500);
+        }
+        
+        // 頁面加載後執行初始化
+        if (document.readyState === 'loading') {
+            document.addEventListener('DOMContentLoaded', initializeWebsite);
+        } else {
+            initializeWebsite();
+        }
+        
+        // 窗口大小變化時重新計算
+        window.addEventListener('resize', () => {
+            const petalContainer = document.getElementById('petal-container');
+            while (petalContainer.firstChild) {
+                petalContainer.removeChild(petalContainer.firstChild);
+            }
+            createPetalFallingEffect();
+        });
+
+        // 倒數計時功能
+        function updateCountdown() {
+            const targetDate = new Date("2025-05-11T00:00:00");
+            const now = new Date();
+            const diff = targetDate - now;
+
+            if (diff <= 0) {
+                document.getElementById("timer").innerText = "母親節快樂！";
+                return;
+            }
+
+            const days = Math.floor(diff / (1000 * 60 * 60 * 24));
+            const hours = Math.floor((diff / (1000 * 60 * 60)) % 24);
+            const minutes = Math.floor((diff / (1000 * 60)) % 60);
+            const seconds = Math.floor((diff / 1000) % 60);
+
+            document.getElementById("timer").innerText = 
+                `${days}天 ${hours}時 ${minutes}分 ${seconds}秒`;
+        }
+
+        // 每秒更新倒數計時
+        setInterval(updateCountdown, 1000);
+        updateCountdown(); // 頁面載入時立即執行一次
+
+        // 啟動花瓣動畫
+        createPetalFallingEffect();
+    </script>
+</body>

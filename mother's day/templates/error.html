@@ -1,0 +1,263 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>生日輸入錯誤</title>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.0/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css" rel="stylesheet">
+    <style>
+        body {
+            background-color: #fef5f7;
+            font-family: 'Microsoft JhengHei', Arial, sans-serif;
+        }
+        
+        .card-container {
+            max-width: 900px;
+            margin: 40px auto;
+            perspective: 1000px;
+        }
+        
+        .card {
+            position: relative;
+            transition: transform 1s;
+            transform-style: preserve-3d;
+            box-shadow: 0 10px 20px rgba(0,0,0,0.2);
+            border-radius: 15px;
+            background: linear-gradient(135deg, #fff8f8, #ffe6e6);
+            margin: 0 auto;
+        }
+        
+        .card-inner {
+            min-height: 450px;
+            border-radius: 15px;
+            overflow: hidden;
+        }
+        
+        .card-header {
+            background-color: #ff8da1;
+            color: white;
+            text-align: center;
+            padding: 20px;
+            border-top-left-radius: 15px;
+            border-top-right-radius: 15px;
+        }
+        
+        .floating-hearts {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            overflow: hidden;
+            pointer-events: none;
+            z-index: 1;
+        }
+        
+        .heart {
+            position: absolute;
+            color: #ff6b8b;
+            font-size: 20px;
+            opacity: 0;
+            animation: floatUp 8s linear infinite;
+        }
+        
+        @keyframes floatUp {
+            0% {
+                transform: translateY(100%) rotate(0deg);
+                opacity: 0;
+            }
+            10% {
+                opacity: 1;
+            }
+            90% {
+                opacity: 1;
+            }
+            100% {
+                transform: translateY(-100vh) rotate(360deg);
+                opacity: 0;
+            }
+        }
+        
+        .btn-pink {
+            background-color: #ff8da1;
+            border-color: #ff8da1;
+            color: white;
+            font-weight: bold;
+            padding: 10px 25px;
+            transition: all 0.3s ease;
+        }
+        
+        .btn-pink:hover {
+            background-color: #ff6b8b;
+            border-color: #ff6b8b;
+            color: white;
+            transform: translateY(-2px);
+            box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+        }
+        
+        .flower {
+            position: absolute;
+            bottom: -50px;
+            opacity: 0.5;
+            z-index: -1;
+        }
+        
+        .flower-left {
+            left: -100px;
+            transform: rotate(-15deg);
+        }
+        
+        .flower-right {
+            right: -100px;
+            transform: rotate(15deg);
+        }
+        
+        .message-area {
+            background-color: rgba(255, 255, 255, 0.8);
+            border-radius: 10px;
+            padding: 20px;
+            margin: 20px auto;
+            box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+            max-width: 700px;
+        }
+        
+        .error-message {
+            background-color: #fff6f8;
+            border-radius: 8px;
+            border-left: 4px solid #ff8da1;
+            font-size: 1.1rem;
+            line-height: 1.8;
+            padding: 20px;
+            margin: 20px 0;
+        }
+        
+        .error-icon {
+            font-size: 4rem;
+            color: #ff8da1;
+            margin-bottom: 20px;
+        }
+        
+        .ribbon {
+            position: absolute;
+            top: -10px;
+            right: -10px;
+            width: 100px;
+            height: 100px;
+            overflow: hidden;
+            z-index: 2;
+        }
+        
+        .ribbon-content {
+            position: absolute;
+            top: 0;
+            right: 0;
+            width: 150px;
+            height: 30px;
+            line-height: 30px;
+            background-color: #ff8da1;
+            transform: rotate(45deg) translateX(40px) translateY(-15px);
+            text-align: center;
+            color: white;
+            font-weight: bold;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="card-container">
+            <div class="card">
+                <div class="card-inner">
+                    <div class="ribbon">
+                        <div class="ribbon-content">錯誤提示</div>
+                    </div>
+                    <div class="card-header">
+                        <h1 class="animate__animated animate__heartBeat">生日輸入錯誤</h1>
+                        <p class="animate__animated animate__fadeIn">很抱歉，我們無法驗證您的生日資訊</p>
+                    </div>
+                    <div class="card-body p-4 position-relative">
+                        <div class="floating-hearts" id="hearts-container"></div>
+                        
+                        <div class="row justify-content-center">
+                            <div class="col-12">
+                                <div class="text-center animate__animated animate__fadeIn">
+                                    <div class="error-icon">
+                                        <i class="bi bi-exclamation-circle"></i>
+                                        ❌
+                                    </div>
+                                    <div class="message-area">
+                                        <h4 class="text-center mb-3">生日資訊錯誤</h4>
+                                        <div class="error-message">
+                                            <p class="text-center">
+                                                您所輸入的生日資訊無效或格式不正確。<br>
+                                                請確認您輸入的日期格式是否正確，並確保：<br><br>
+                                                • 月份是有效的（1-12月）<br>
+                                                • 日期符合所選月份範圍<br>
+                                                • 年份是有效的四位數字<br><br>
+                                                請返回首頁重新輸入您的生日資訊。
+                                            </p>
+                                        </div>
+                                        <div class="text-center mt-4">
+                                            <a href="/" class="btn btn-pink animate__animated animate__pulse">
+                                                <i class="bi bi-house-door"></i> 返回首頁
+                                            </a>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div class="flower flower-left">
+                            <svg width="150" height="150" viewBox="0 0 100 100">
+                                <path d="M50,15 Q60,5 70,15 T90,15 Q100,25 90,35 T90,55 Q80,65 70,55 T50,55 Q40,65 30,55 T10,55 Q0,45 10,35 T10,15 Q20,5 30,15 T50,15" fill="#ff8da1" />
+                                <path d="M50,30 L50,90" stroke="#5d9e5f" stroke-width="3" />
+                            </svg>
+                        </div>
+                        <div class="flower flower-right">
+                            <svg width="150" height="150" viewBox="0 0 100 100">
+                                <path d="M50,15 Q60,5 70,15 T90,15 Q100,25 90,35 T90,55 Q80,65 70,55 T50,55 Q40,65 30,55 T10,55 Q0,45 10,35 T10,15 Q20,5 30,15 T50,15" fill="#ff8da1" />
+                                <path d="M50,30 L50,90" stroke="#5d9e5f" stroke-width="3" />
+                            </svg>
+                        </div>
+                    </div>
+                    <div class="card-footer text-center py-3 bg-light">
+                        <p>© 2025 - 生日驗證系統</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.0/js/bootstrap.bundle.min.js"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            // 獲取元素
+            const heartsContainer = document.getElementById('hearts-container');
+            
+            // 愛心特效
+            function createHearts() {
+                for (let i = 0; i < 10; i++) {
+                    setTimeout(() => {
+                        const heart = document.createElement('div');
+                        heart.classList.add('heart');
+                        heart.innerHTML = '❤';
+                        heart.style.left = Math.random() * 100 + '%';
+                        heart.style.animationDelay = Math.random() * 2 + 's';
+                        heart.style.fontSize = Math.random() * 20 + 20 + 'px';
+                        heartsContainer.appendChild(heart);
+                        
+                        // 移除愛心元素以避免 DOM 過大
+                        setTimeout(() => {
+                            heartsContainer.removeChild(heart);
+                        }, 8000);
+                    }, i * 300);
+                }
+            }
+            
+            // 頁面載入時自動創建一些愛心，但數量較少
+            setTimeout(createHearts, 1000);
+        });
+    </script>
+</body>
+</html>
